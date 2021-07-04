@@ -1,11 +1,16 @@
+using LockerHubCore.Context;
+using LockerHubCore.Interface;
+using LockerHubCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +30,20 @@ namespace LockerHub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddDbContext<HubContext>(options => options.UseSqlServer(
+               Configuration.GetConnectionString("DefaultConnection"),
+               b => b.MigrationsAssembly(typeof(HubContext).Assembly.FullName)));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Locker Hub Documentation",
+                    Version = "v1"
+                });
+            });
             services.AddControllers();
         }
 
@@ -35,7 +54,17 @@ namespace LockerHub
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                // For Debug in Kestrel
+                c.SwaggerEndpoint("v1/swagger.json", "Locker Hub");
 
+                // To deploy on IIS
+                // c.SwaggerEndpoint("/LockerHub/swagger/v1/swagger.json", "Locker HubP");
+
+                c.RoutePrefix = "swagger";
+            });
             app.UseHttpsRedirection();
 
             app.UseRouting();
