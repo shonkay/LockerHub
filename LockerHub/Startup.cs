@@ -1,6 +1,7 @@
 using LockerHubCore.Context;
 using LockerHubCore.Interface;
 using LockerHubCore.Repository;
+using LockerHubCore.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,7 @@ namespace LockerHub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ILocker, LockerRepository>().AddTransient<LockerService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<HubContext>(options => options.UseSqlServer(
