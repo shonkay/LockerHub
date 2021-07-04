@@ -7,6 +7,7 @@ namespace LockerHubCore.Interface
 {
     public interface IUnitOfWork : IDisposable
     {
+        ILocker Locker { get; }
         Task<int> Complete();
         void Cancel();
     }
