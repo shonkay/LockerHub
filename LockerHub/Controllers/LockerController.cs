@@ -48,5 +48,65 @@ namespace LockerHub.Controllers
                 throw;
             }
         }
+
+        [HttpGet("[action]/{State}")]
+        public async Task<IActionResult> GetLockersByState(string State)
+        {
+            try
+            {
+                var result = await _locker.GetLockerByState(State);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet("[action]/{City}")]
+        public async Task<IActionResult> GetLockersByCity(string City)
+        {
+            try
+            {
+                var result = await _locker.GetLockerByCity(City);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet("[action]/{State}/{Size}")]
+        public async Task<IActionResult> GetLockersInStateBySize(string State, string Size)
+        {
+            try
+            {
+                var result = await _locker.GetLockerInStateBySize(State, Size);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet("[action]/{City}/{Size}")]
+        public async Task<IActionResult> GetLockersInCityBySize(string City, string Size)
+        {
+            try
+            {
+                var result = await _locker.GetLockerInStateBySize(City, Size);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
