@@ -4,14 +4,16 @@ using LockerHubCore.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LockerHubCore.Migrations
 {
     [DbContext(typeof(HubContext))]
-    partial class HubContextModelSnapshot : ModelSnapshot
+    [Migration("20210707071309_AddedMoreParameters")]
+    partial class AddedMoreParameters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,6 @@ namespace LockerHubCore.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Availability")
-                        .HasColumnType("bit");
 
                     b.Property<double>("Breath")
                         .HasColumnType("float");

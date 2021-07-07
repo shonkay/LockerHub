@@ -14,5 +14,9 @@ namespace LockerHubCore.Model
         public double Width { get; set; }
         public double Breath { get; set; }
         public double Height { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Price { get; set; }
+        public bool Availability { get; set; }
     }
 }

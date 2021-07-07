@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LockerHubCore.Migrations
 {
     [DbContext(typeof(HubContext))]
-    [Migration("20210704151611_Init")]
+    [Migration("20210704173927_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
