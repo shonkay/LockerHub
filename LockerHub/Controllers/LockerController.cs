@@ -49,12 +49,12 @@ namespace LockerHub.Controllers
             }
         }
 
-        [HttpGet("[action]")]
-        public async Task<IActionResult> GetLockersByStateOrCity(string State, string City)
+        [HttpGet("[action]/{parameter}")]
+        public async Task<IActionResult> SearchLocker(string parameter)
         {
             try
             {
-                var result = await _locker.GetLockerByState(State, City);
+                var result = await _locker.GetLockerByState(parameter);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -65,12 +65,12 @@ namespace LockerHub.Controllers
         }
 
 
-        [HttpGet("[action]")]
-        public async Task<IActionResult> SortLockersByPrice(string State, string City)
+        [HttpGet("[action]/{parameter}")]
+        public async Task<IActionResult> SortLockersByPrice(string parameter)
         {
             try
             {
-                var result = await _locker.SortLockerByPrice(State, City);
+                var result = await _locker.SortLockerByPrice(parameter);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -80,12 +80,12 @@ namespace LockerHub.Controllers
             }
         }
 
-        [HttpGet("[action]")]
-        public async Task<IActionResult> SortLockersByClosest(string State, string City)
+        [HttpGet("[action]/{parameter}")]
+        public async Task<IActionResult> SortLockersByClosest(string parameter)
         {
             try
             {
-                var result = await _locker.SortLockerByClosest(State, City);
+                var result = await _locker.SortLockerByClosest(parameter);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -95,27 +95,12 @@ namespace LockerHub.Controllers
             }
         }
 
-        [HttpGet("[action]/{State}/{Size}")]
-        public async Task<IActionResult> GetLockersInStateBySize(string State, string Size)
+        [HttpGet("[action]/{parameter}/{Size}")]
+        public async Task<IActionResult> GetLockersInStateBySize(string parameter, string Size)
         {
             try
             {
-                var result = await _locker.GetLockerInStateBySize(State, Size);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        [HttpGet("[action]/{City}/{Size}")]
-        public async Task<IActionResult> GetLockersInCityBySize(string City, string Size)
-        {
-            try
-            {
-                var result = await _locker.GetLockerInStateBySize(City, Size);
+                var result = await _locker.SortLockerBySize(parameter, Size);
                 return Ok(result);
             }
             catch (Exception ex)

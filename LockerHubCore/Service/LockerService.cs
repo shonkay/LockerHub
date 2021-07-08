@@ -31,46 +31,70 @@ namespace LockerHubCore.Service
         public async Task<Locker> GetById(Guid Id) =>
             await _unitOfWork.Locker.GetById(Id);
 
-        public async Task<Response> GetLockerByState(string State, string City)
+        public async Task<Response> GetLockerByState(string parameter)
         {
-            var entity = await _unitOfWork.Locker.GetLockerByState(State, City);
+            var entity = await _unitOfWork.Locker.GetLockerByState(parameter);
+            if(entity.Count() == 0)
+            {
+                entity = await _unitOfWork.Locker.GetLockerByCity(parameter);
+                if(entity.Count() == 0)
+                {
+                    return new Response();
+                }
+            }
             var ResponseList = LoopResult(entity);
 
             return ResponseList;
         }
 
-        public async Task<Response> SortLockerByPrice(string State, string City)
+        public async Task<Response> SortLockerByPrice(string parameter)
         {
-            var entity = await _unitOfWork.Locker.SortLockerByPrice(State, City);
+            var entity = await _unitOfWork.Locker.SortLockerByPrice(parameter);
+            if(entity.Count() == 0)
+            {
+                entity = await _unitOfWork.Locker.SortCityLockerByPrice(parameter);
+                if(entity.Count() == 0)
+                {
+                    return new Response();
+                }
+            }
             var ResponseList = LoopResult(entity);
 
             return ResponseList;
         }
 
-        public async Task<Response> GetLockerInStateBySize(string State, string size)
+        public async Task<Response> SortLockerBySize(string parameter, string size)
         {
-            var entity = await _unitOfWork.Locker.GetLockerInStateBySize(State, size);
+            var entity = await _unitOfWork.Locker.GetLockerInStateBySize(parameter, size);
+            if(entity.Count() == 0)
+            {
+                entity = await _unitOfWork.Locker.GetLockerInCityBySize(parameter, size);
+                if(entity.Count() == 0)
+                {
+                    return new Response();
+                }
+            }
             var response = LoopResult(entity);
 
             return response;
         }
 
-        public async Task<Response> GetLockerInCityBySize(string City, string size)
-        {
-            var entity = await _unitOfWork.Locker.GetLockerInCityBySize(City, size);
-            var response = LoopResult(entity);
-
-            return response;
-        }
-
-        public async Task<Response> SortLockerByClosest(string State, string City)
+        public async Task<Response> SortLockerByClosest(string parameter)
         {
             var location = await GetMapLocation(_config.GetValue<string>("GoogleMapApi:CurrentAddress"));
             double.TryParse(location.Latitude, out double latitude);
             double.TryParse(location.Longitude, out double longitude);
 
             var coord = new GeoCoordinate(latitude, longitude);
-            var entity = await _unitOfWork.Locker.GetLockerByState(State, City);
+            var entity = await _unitOfWork.Locker.GetLockerByState(parameter);
+            if(entity.Count() == 0)
+            {
+                entity = await _unitOfWork.Locker.GetLockerByCity(parameter);
+                if(entity.Count() == 0)
+                {
+                    return new Response();
+                }
+            }
 
             var query = entity.ToLookup(x => new GeoCoordinate(x.Latitude, x.Longitude), x => x)
                 .OrderBy(x => x.Key.GetDistanceTo(coord));
