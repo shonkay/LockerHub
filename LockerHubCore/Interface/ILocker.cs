@@ -14,6 +14,8 @@ namespace LockerHubCore.Interface
 
         Task<IEnumerable<Locker>> GetLockerByCity(string City);
 
-        Task<IEnumerable<Locker>> GetLockerByState(string State);
+        Task<IEnumerable<Locker>> GetLockerByState(string State, string city);
+
+        Task<IEnumerable<Locker>> SortLockerByPrice(string State, string City);
     }
 }

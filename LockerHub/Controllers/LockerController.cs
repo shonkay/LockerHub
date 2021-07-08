@@ -49,12 +49,12 @@ namespace LockerHub.Controllers
             }
         }
 
-        [HttpGet("[action]/{State}")]
-        public async Task<IActionResult> GetLockersByState(string State)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetLockersByStateOrCity(string State, string City)
         {
             try
             {
-                var result = await _locker.GetLockerByState(State);
+                var result = await _locker.GetLockerByState(State, City);
                 return Ok(result);
             }
             catch (Exception)
@@ -64,12 +64,13 @@ namespace LockerHub.Controllers
             }
         }
 
-        [HttpGet("[action]/{City}")]
-        public async Task<IActionResult> GetLockersByCity(string City)
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SortLockersByPrice(string State, string City)
         {
             try
             {
-                var result = await _locker.GetLockerByCity(City);
+                var result = await _locker.SortLockerByPrice(State, City);
                 return Ok(result);
             }
             catch (Exception)

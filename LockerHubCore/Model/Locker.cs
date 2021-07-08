@@ -17,6 +17,6 @@ namespace LockerHubCore.Model
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public double Price { get; set; }
-        public bool Availability { get; set; }
+        public int NoAvailable { get; set; }
     }
 }
