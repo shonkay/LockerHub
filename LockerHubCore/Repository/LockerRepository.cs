@@ -22,9 +22,15 @@ namespace LockerHubCore.Repository
             return query;
         }
 
-        public async Task<IEnumerable<Locker>> SortLockerByPrice(string State, string City)
+        public async Task<IEnumerable<Locker>> SortLockerByPrice(string State)
         {
-            var query = await Find(x => x.State == State || x.City == City);
+            var query = await Find(x => x.State == State);
+            return query.OrderBy(x => x.Price);
+        }
+
+        public async Task<IEnumerable<Locker>> SortCityLockerByPrice(string City)
+        {
+            var query = await Find(x => x.City == City);
             return query.OrderBy(x => x.Price);
         }
 
@@ -40,9 +46,9 @@ namespace LockerHubCore.Repository
             return query;
         }
 
-        public async Task<IEnumerable<Locker>> GetLockerByState(string State, string city)
+        public async Task<IEnumerable<Locker>> GetLockerByState(string State)
         {
-            var query = await Find(x => x.State == State || x.City == city);
+            var query = await Find(x => x.State == State);
             return query;
         }
     }

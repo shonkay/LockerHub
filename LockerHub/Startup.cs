@@ -33,7 +33,11 @@ namespace LockerHub
         {
             services.AddTransient<ILocker, LockerRepository>().AddTransient<LockerService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-
+            services.AddHttpClient("Google Client", client =>
+            {
+                client.BaseAddress = new Uri(Configuration["GoogleMapApi:Base"]);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
             services.AddDbContext<HubContext>(options => options.UseSqlServer(
                Configuration.GetConnectionString("DefaultConnection"),
                b => b.MigrationsAssembly(typeof(HubContext).Assembly.FullName)));
