@@ -27,10 +27,10 @@ namespace LockerHub.Controllers
                 var result = await _locker.GetAll();
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -42,10 +42,10 @@ namespace LockerHub.Controllers
                 var result = await _locker.GetById(Id);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -57,10 +57,10 @@ namespace LockerHub.Controllers
                 var result = await _locker.GetLockerByState(State, City);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -73,10 +73,25 @@ namespace LockerHub.Controllers
                 var result = await _locker.SortLockerByPrice(State, City);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
+            }
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SortLockersByClosest(string State, string City)
+        {
+            try
+            {
+                var result = await _locker.SortLockerByClosest(State, City);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 
@@ -88,10 +103,10 @@ namespace LockerHub.Controllers
                 var result = await _locker.GetLockerInStateBySize(State, Size);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -103,10 +118,10 @@ namespace LockerHub.Controllers
                 var result = await _locker.GetLockerInStateBySize(City, Size);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
     }
