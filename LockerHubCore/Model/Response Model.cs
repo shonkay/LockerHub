@@ -10,5 +10,6 @@ namespace LockerHubCore.Model
         public string Details { get; set; }
         public string Price { get; set; }
         public string Availability { get; set; }
+        public string Address { get; set; }
     }
 }

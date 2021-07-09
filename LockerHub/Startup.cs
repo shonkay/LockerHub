@@ -50,6 +50,7 @@ namespace LockerHub
                     Version = "v1"
                 });
             });
+            services.AddCors();
             services.AddControllers();
         }
 
@@ -71,9 +72,13 @@ namespace LockerHub
 
                 c.RoutePrefix = "swagger";
             });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(options => options.AllowAnyHeader()
+            .AllowAnyOrigin()
+            .AllowAnyMethod());
 
             app.UseAuthorization();
 

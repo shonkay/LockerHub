@@ -39,7 +39,13 @@ namespace LockerHubCore.Service
                 entity = await _unitOfWork.Locker.GetLockerByCity(parameter);
                 if(entity.Count() == 0)
                 {
-                    return new Response();
+                    return new Response 
+                    {
+                        ResponseMessage = "No Locker Found",
+                        ResponseCode = System.Net.HttpStatusCode.NoContent,
+                        ModelResponse = null,
+                        TotalLockerAvailable = 0
+                    };
                 }
             }
             var ResponseList = LoopResult(entity);
@@ -55,7 +61,13 @@ namespace LockerHubCore.Service
                 entity = await _unitOfWork.Locker.SortCityLockerByPrice(parameter);
                 if(entity.Count() == 0)
                 {
-                    return new Response();
+                    return new Response
+                    {
+                        ResponseMessage = "No Locker Found",
+                        ResponseCode = System.Net.HttpStatusCode.NoContent,
+                        ModelResponse = null,
+                        TotalLockerAvailable = 0
+                    };
                 }
             }
             var ResponseList = LoopResult(entity);
@@ -71,7 +83,13 @@ namespace LockerHubCore.Service
                 entity = await _unitOfWork.Locker.GetLockerInCityBySize(parameter, size);
                 if(entity.Count() == 0)
                 {
-                    return new Response();
+                    return new Response
+                    {
+                        ResponseMessage = "No Locker Found",
+                        ResponseCode = System.Net.HttpStatusCode.NoContent,
+                        ModelResponse = null,
+                        TotalLockerAvailable = 0
+                    };
                 }
             }
             var response = LoopResult(entity);
@@ -92,7 +110,13 @@ namespace LockerHubCore.Service
                 entity = await _unitOfWork.Locker.GetLockerByCity(parameter);
                 if(entity.Count() == 0)
                 {
-                    return new Response();
+                    return new Response
+                    {
+                        ResponseMessage = "No Locker Found",
+                        ResponseCode = System.Net.HttpStatusCode.NoContent,
+                        ModelResponse = null,
+                        TotalLockerAvailable = 0
+                    };
                 }
             }
 
@@ -154,6 +178,7 @@ namespace LockerHubCore.Service
                     Details = _config.GetValue<string>("Locker:viewDetails"),
                     Price = $"{model.Price}N For First Rent",
                     Availability = $"{model.NoAvailable} Available",
+                    Address = model.Address
                 };
                 TotalLockers += model.NoAvailable;
                 ResponseList.Add(response);
@@ -161,6 +186,8 @@ namespace LockerHubCore.Service
 
             return new Response 
             { 
+                ResponseMessage = $"Found {TotalLockers} Lockers",
+                ResponseCode = System.Net.HttpStatusCode.OK,
                 ModelResponse = ResponseList,
                 TotalLockerAvailable = TotalLockers
             };
